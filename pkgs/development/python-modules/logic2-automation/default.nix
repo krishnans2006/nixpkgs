@@ -10,6 +10,11 @@
   grpcio,
   grpcio-tools,
   protobuf,
+
+  # check
+  pytestCheckHook,
+  writableTmpDirAsHomeHook,
+  saleae-logic-2,
 }:
 
 buildPythonPackage rec {
@@ -46,6 +51,17 @@ buildPythonPackage rec {
   ];
 
   pythonImportsCheck = [ "saleae.automation" ];
+
+  nativeCheckInputs = [
+    writableTmpDirAsHomeHook
+    pytestCheckHook
+  ];
+
+  checkInputs = [
+    saleae-logic-2
+  ];
+
+  pytestFlags = [ "--app-path=${saleae-logic-2}/bin/saleae-logic-2" ];
 
   meta = {
     description = "Automation interface for Saleae Logic 2 software";
